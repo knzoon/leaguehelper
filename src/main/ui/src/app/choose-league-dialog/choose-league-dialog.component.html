@@ -1,0 +1,41 @@
+<p-dialog header="Välj vilken liga du är intresserad av" [(visible)]="displayDialog" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '50vw', height: '50vh'}" (onShow)="searchLeagues()" (onHide)="closeDialog()" >
+  <div class="flex flex-column gap-2">
+    <div class="flex flex-row gap-2">
+      <div class="flex flex-column">
+        <div>
+          <label for="roundSelect">Omgång</label>
+        </div>
+        <div>
+          <p-dropdown id="roundSelect" [options]="rounds" [(ngModel)]="selectedRound" placeholder="Samtliga omgångar" optionLabel="name" [showClear]="true" (onChange)="searchLeagues()" ></p-dropdown>
+        </div>
+      </div>
+      <div class="flex flex-column">
+        <div>
+          <label for="divisionSelect">Division</label>
+        </div>
+        <div>
+          <p-dropdown id="divisionSelect" [options]="divisions" [(ngModel)]="selectedDivision" placeholder="Samtliga divisioner" optionLabel="name" [showClear]="true" (onChange)="searchLeagues()" ></p-dropdown>
+        </div>
+      </div>
+      <div class="flex flex-column">
+        <div>
+          <label for="groupSelect">Grupp</label>
+        </div>
+        <div>
+          <p-dropdown id="groupSelect" [options]="groups" [(ngModel)]="selectedGroup" placeholder="Samtliga grupper" optionLabel="name" [showClear]="true" (onChange)="searchLeagues()" ></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p-listbox [options]="leagues" [(ngModel)]="selectedLeague" optionLabel="id">
+        <ng-template let-league pTemplate="item">
+          <div>{{league.round}} - {{league.division}} - {{league.group}}</div>
+        </ng-template>
+      </p-listbox>
+    </div>
+    <div class="flex justify-content-center gap-4">
+      <p-button id="chooseFromLeagueList" label="Välj" [disabled]="dontAllowChooseLeague()" (click)="chooseLeague()"></p-button>
+      <p-button id="createNewLeagueFromSelectionShowDialogButton" label="Skapa ny" [disabled]="dontAllowCreateLeague()" (click)="createNewLeague()"></p-button>
+    </div>
+  </div>
+</p-dialog>

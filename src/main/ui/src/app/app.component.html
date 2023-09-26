@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="pageHeader">
+    Leaguehelper
+  </div>
+  <div class="spaced font-bold">
+    Vald liga:&nbsp;
+  </div>
+  <div *ngIf="selectedLeague">
+    Omgång {{selectedLeague.round}} Division {{selectedLeague.division}} Grupp {{selectedLeague.group}}
+  </div>
+  <div class="spaced">
+    <p-button id="chooseLeagueShowDialogButtonNEW"  label="Välj liga" (click)="showChooseLeagueDialogNEW()"></p-button>
+  </div>
+</div>
+
+<p-button id="fetchLeague"  label="Hämta liga" (click)="fetchLeague()"></p-button>
+<div>
+  <div *ngFor="let user of users" class="field-checkbox">
+    <p-checkbox name="viewUser" value="user" [value]="user"  [(ngModel)]="selectedUsers" [inputId]="user.label" ></p-checkbox>
+    <label [for]="user.label">{{user.label}} from {{user.country}} {{user.currentPoints}} +{{user.currentPph}}</label>
+  </div>
+</div>
+<p-button id="updateC" icon="pi pi-refresh" label="Uppdatera graf" (click)="updateGraphCumulative()"></p-button>
+<p-chart type="line" [data]="dataCumulative" [options]="optionsCumulative" width="90vw" height="60vh"></p-chart>
+
+<!--<p-button id="updateD" icon="pi pi-refresh" label="Uppdatera graf" (click)="updateGraphDaily()"></p-button>-->
+<!--<p-chart type="line" [data]="dataDaily" width="90vw" height="60vh"></p-chart>-->
+
+<app-choose-league-dialog [(displayDialog)]="displayChooseLeagueDialogNEW" (selectedLeagueChange)="setSelectedLeague($event)" (leagueToCreate)="handleCreateLeague($event)" ></app-choose-league-dialog>
+<app-save-league-dialog [(displayDialog)]="displaySaveLeagueDialogNEW" [leagueToCreate]="leagueToCreate"></app-save-league-dialog>

@@ -1,0 +1,52 @@
+<p-dialog header="Skapa ny liga" [(visible)]="displayDialog" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '50vw', height: '50vh'}"  (onShow)="initSelectedValues()" (onHide)="closeDialog()" >
+  <div class="flex flex-column gap-2">
+    <div class="flex flex-row gap-2">
+      <div class="flex flex-column">
+        <div>
+          <label for="roundSelectSave">Omgång</label>
+        </div>
+        <div>
+          <p-dropdown id="roundSelectSave" [options]="rounds" [(ngModel)]="selectedRound" [disabled]="true" placeholder="Välj omgång" optionLabel="name"></p-dropdown>
+        </div>
+      </div>
+      <div class="flex flex-column">
+        <div>
+          <label for="divisionSelectSave">Division</label>
+        </div>
+        <div>
+          <p-dropdown id="divisionSelectSave" [options]="divisions" [(ngModel)]="selectedDivision" [disabled]="dontAllowChooseDivision()" placeholder="Välj division" optionLabel="name"></p-dropdown>
+        </div>
+      </div>
+      <div class="flex flex-column">
+        <div>
+          <label for="groupSave">Grupp</label>
+        </div>
+        <div>
+          <p-dropdown id="groupSave" [options]="groups" [(ngModel)]="selectedGroup" [disabled]="dontAllowChooseGroup()" placeholder="Välj grupp" optionLabel="name" ></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-column">
+      <div>
+        <label for="chooseUserAutocomplete">Sök och välj användare</label>
+      </div>
+      <div>
+        <p-autoComplete id="chooseUserAutocomplete" [(ngModel)]="selectedAddUser" [showEmptyMessage]="true" emptyMessage="Ingen användare hittad" [suggestions]="suggestedUsers" (completeMethod)="searchUsers($event)" field="username" [minLength]="1" [size]="6" (onSelect)="userSelected($event)"></p-autoComplete>
+      </div>
+    </div>
+    <div>
+      <p-listbox [options]="usersToSave" [(ngModel)]="selectedSaveUser" optionLabel="username" emptyMessage="Ingen användare tillagd" >
+        <ng-template let-user pTemplate="item">
+          <div class="flex align-items-center gap-2">
+            <div>{{user.username}}</div>
+            <p-button icon="pi pi-times" styleClass="p-button-rounded p-button-text" (click)="deleteUser(user)"></p-button>
+          </div>
+        </ng-template>
+      </p-listbox>
+    </div>
+    <div class="flex justify-content-center gap-4">
+      <p-button id="saveLeague" [disabled]="dontAllowSaveLeague()" label="Spara" (click)="saveLeague()"></p-button>
+    </div>
+  </div>
+</p-dialog>
+
